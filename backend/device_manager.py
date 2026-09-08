@@ -1,6 +1,7 @@
 import brainflow
 from brainflow.board_shim import BoardShim, BrainFlowInputParams, BoardIds, BrainFlowError
 import logging
+import os
 
 class DeviceManager:
     def __init__(self):
@@ -9,7 +10,9 @@ class DeviceManager:
         self.board = None
 
         # Try Muse 2 first
-        if not self._connect_muse():
+        if os.getenv('VERCEL_ENV') == 'preview':
+            self._connect_synthetic()
+        elif not self._connect_muse():
             # If Muse fails, try synthetic board
             self._connect_synthetic()
 

@@ -1,5 +1,6 @@
 import json
 import os
+import tempfile
 from models import SessionData, EEGData
 from typing import Dict, List
 from datetime import datetime, timezone
@@ -16,7 +17,10 @@ class SessionManager:
         self.sessions: Dict[str, SessionData] = {}
         self.websockets: Dict[str, List[WebSocket]] = {}
         self.locks: Dict[str, Lock] = {}
-        self.data_dir = 'data'
+        self.data_dir = (
+            os.path.join(tempfile.gettempdir(), 'studyamp-preview')
+            if os.getenv('VERCEL_ENV') == 'preview' else 'data'
+        )
         self.data_file = os.path.join(self.data_dir, 'sessions.json')
         os.makedirs(self.data_dir, exist_ok=True)
         self.load_sessions()
