@@ -9,7 +9,7 @@ import {
   Title,
   Tooltip
 } from 'chart.js';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Bar, Line } from 'react-chartjs-2';
 import '../styles/Global.css';
 import '../styles/ViewSes.css';
@@ -35,16 +35,12 @@ const SessionHistory = () => {
   const apiUrl = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
-    fetchSessions();
-  }, []);
-
-  useEffect(() => {
     if (sessions.length > 0) {
       calculateSessionMetrics(sessions);
     }
   }, [sessions]);
 
-  const fetchSessions = async () => {
+  const fetchSessions = useCallback(async () => {
     try {
       setIsLoading(true);
       const response = await fetch(`${apiUrl}/sessions/history?limit=10`);
@@ -65,7 +61,11 @@ const SessionHistory = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [apiUrl]);
+
+  useEffect(() => {
+    fetchSessions();
+  }, [fetchSessions]);
 
   const calculateSessionMetrics = (sessions) => {
     const metrics = {

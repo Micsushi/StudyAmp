@@ -1,5 +1,5 @@
 import MenuIcon from "@mui/icons-material/Menu";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";

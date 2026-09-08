@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Line } from 'react-chartjs-2';
-import { useNavigate } from 'react-router-dom';
 import '../styles/Global.css';
 import '../styles/SessionPage.css';
 import {
@@ -39,7 +38,7 @@ const SessionPage = () => {
   });
 
   const [movingAverage, setMovingAverage] = useState(0);
-  const [attentionScores, setAttentionScores] = useState([]);
+  const [, setAttentionScores] = useState([]);
   const [session, setSession] = useState(null);
   const [socket, setSocket] = useState(null);
   const [isConfirmed, setIsConfirmed] = useState(false);
